@@ -1,5 +1,6 @@
 <!doctype html>
-<html xmlns:th="http://www.w3.org/1999/xhtml" lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -13,10 +14,14 @@
     <link rel="stylesheet"
           href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/webjars/font-awesome/css/font-awesome.min.css"></link>
-    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
+    <link crossorigin='anonymous' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css'
+          integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' rel='stylesheet'>
 
     <!-- Custom styles for this template -->
     <link href="./css/pricing.css" rel="stylesheet">
+    <link href="./css/mystore   .css" rel="stylesheet">
+    <script src="./js/mystore.js"></script>
+
     <title>My Store - Your Fav Store.</title></head>
 <style>
     .bd-placeholder-img {
@@ -38,79 +43,100 @@
 </head>
 <body>
 <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-    <h5 class="my-0 mr-md-auto font-weight-normal">My Store <i class='fas fa-gifts'></i></h5>
-    <a class="btn btn-outline-primary" href="#">Sign up</a>
+    <h5 class="my-0 mr-md-auto font-weight-normal"><span style="color: #007BFF;">My Store <i
+            class='fas fa-gifts'></i></span></h5>
+    <nav class="my-2 my-md-0 mr-md-3">
+        <a class="p-2 text-dark"> <span style="color: #007BFF;"><i class="fa fa-user-circle"></i> Welcome [[${#httpServletRequest.remoteUser}]] </span>
+        </a>
+        <a class="p-2 text-dark" href="/checkout" th:href="@{/checkout}">
+            <span style="color: #007BFF;">
+                My Cart <i class="fa fa-shopping-cart"></i>
+                <span class="badge" style="color: #007BFF;">4</span>
+            </span>
+        </a>
+    </nav>
+    <div>
+        <form action="#" method="post" th:action="@{/logout}">
+            <input class="btn btn-outline-primary" type="submit" value="Logout"/>
+        </form>
+    </div>
 </div>
 
-<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-    <h1 class="display-4">Your Store</h1>
-    <p class="lead">Merchandise being sold at this store is listed below. Select the product you need, add it to your shopping cart and checkout with multiple payment options.</p>
+<div class="pricing-header px-0 py-0 pt-md-0 pb-md-0 mx-auto text-center">
+    <h3 class="display-4">Your Store</h3>
+    <p class="lead">Select the product you need and purchase with multiple payment options.</p>
 </div>
 
-<div class="container">
-    <div class="card-deck mb-3 text-center">
+<div class="container-fluid">
+    <div class="card-deck mb-4 text-center">
         <div class="card mb-4 shadow-sm">
             <div class="card-header">
-                <h4 class="my-0 font-weight-normal">Free</h4>
+                <h4 class="my-0 font-weight-normal">iPhone XR</h4>
             </div>
             <div class="card-body">
-                <h1 class="card-title pricing-card-title">$0
-                    <small class="text-muted">/ mo</small>
-                </h1>
-                <ul class="list-unstyled mt-3 mb-4">
-                    <li>10 users included</li>
-                    <li>2 GB of storage</li>
-                    <li>Email support</li>
-                    <li>Help center access</li>
-                </ul>
-                <button type="button" class="btn btn-lg btn-block btn-outline-primary">Sign up for free</button>
+                <div class="img-box">
+                    <img alt="" class="img-responsive img-fluid" src="./img/iphone-xr.png">
+                </div>
+                <h4 class="card-title pricing-card-title">$500</h4>
+                <button class="btn btn-lg btn-block btn-outline-primary" id="ixr" type="button">Add to Cart</button>
+            </div>
+            <div class="card-footer">
+                <small class="text-muted">Available</small>
             </div>
         </div>
         <div class="card mb-4 shadow-sm">
             <div class="card-header">
-                <h4 class="my-0 font-weight-normal">Pro</h4>
+                <h4 class="my-0 font-weight-normal">iPhone Xs</h4>
             </div>
             <div class="card-body">
-                <h1 class="card-title pricing-card-title">$15
-                    <small class="text-muted">/ mo</small>
-                </h1>
-                <ul class="list-unstyled mt-3 mb-4">
-                    <li>20 users included</li>
-                    <li>10 GB of storage</li>
-                    <li>Priority email support</li>
-                    <li>Help center access</li>
-                </ul>
-                <button type="button" class="btn btn-lg btn-block btn-primary">Get started</button>
+                <div class="img-box">
+                    <img alt="" class="img-responsive img-fluid" src="./img/iphone-xs.png">
+                </div>
+                <h4 class="card-title pricing-card-title">$600</h4>
+                <button class="btn btn-lg btn-block btn-outline-primary" type="button">Add to Cart</button>
+            </div>
+            <div class="card-footer">
+                <small class="text-muted">Available</small>
             </div>
         </div>
         <div class="card mb-4 shadow-sm">
             <div class="card-header">
-                <h4 class="my-0 font-weight-normal">Enterprise</h4>
+                <h4 class="my-0 font-weight-normal">iPhone Xs Max</h4>
             </div>
             <div class="card-body">
-                <h1 class="card-title pricing-card-title">$29
-                    <small class="text-muted">/ mo</small>
-                </h1>
-                <ul class="list-unstyled mt-3 mb-4">
-                    <li>30 users included</li>
-                    <li>15 GB of storage</li>
-                    <li>Phone and email support</li>
-                    <li>Help center access</li>
-                </ul>
-                <button type="button" class="btn btn-lg btn-block btn-primary">Contact us</button>
+                <div class="img-box">
+                    <img alt="" class="img-responsive img-fluid" src="./img/iphone-xs-max.png">
+                </div>
+                <h4 class="card-title pricing-card-title">$700</h4>
+                <button class="btn btn-lg btn-block btn-outline-primary" type="button">Add to Cart</button>
+            </div>
+            <div class="card-footer">
+                <small class="text-muted">Available</small>
+            </div>
+        </div>
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header">
+                <h4 class="my-0 font-weight-normal">iPad Pro 12"</h4>
+            </div>
+            <div class="card-body">
+                <div class="img-box">
+                    <img alt="" class="img-responsive img-fluid" src="./img/ipad-pro-12.png">
+                </div>
+                <h4 class="card-title pricing-card-title">$1500</h4>
+                <button class="btn btn-lg btn-block btn-outline-primary" type="button">Add to Cart</button>
+            </div>
+            <div class="card-footer">
+                <small class="text-muted">Available</small>
             </div>
         </div>
     </div>
-
-    <footer class="pt-4 my-md-5 pt-md-5 border-top">
-        <div class="row">
-            <div class="col-12 col-md">
-                <img class="mb-2" src="{{ site.baseurl }}/docs/{{ site.docs_version }}/assets/brand/bootstrap-solid.svg"
-                     alt="" width="24" height="24">
-                <small class="d-block mb-3 text-muted align-content-center">&copy; 2019 Rishikesh Radhakrishnan</small>
-            </div>
-        </div>
-    </footer>
 </div>
+<footer class="pt-4 my-md-5 pt-md-5 border-top text-center">
+    <div class="row">
+        <div class="col-12 col-md">
+            <small class="d-block mb-3 text-muted align-content-center">&copy; 2019 My Store Pvt Ltd.</small>
+        </div>
+    </div>
+</footer>
 </body>
 </html>

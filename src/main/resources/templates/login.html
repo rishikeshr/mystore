@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<!--suppress ALL -->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+>
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <meta content="" name="description">
+    <meta content="Mark Otto, Jacob Thornton, and Bootstrap contributors" name="author">
+    <meta content="Jekyll v3.8.5" name="generator">
+    <!-- Bootstrap core CSS -->
+    <script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <title>MyStore - Your Fav Store</title>
+    <link href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css"
+          rel="stylesheet"/>
+    <link href="/webjars/font-awesome/css/font-awesome.min.css" rel="stylesheet"></link>
+    <link crossorigin='anonymous' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css'
+          integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' rel='stylesheet'>
+
+    <!-- Custom styles for this template -->
+    <link href="./css/pricing.css" rel="stylesheet">
+    <script src="./js/mystore.js"></script>
+    <title>My Store - Login</title>
+    <style>
+        .image {
+            min-height: 100vh;
+        }
+
+        .bg-image {
+            background-image: url('./img/apple-store.jpg');
+            background-size: cover;
+            background-position: center center;
+        }
+    </style>
+</head>
+<body>
+<!--<form th:action="@{/login}" method="post">-->
+<!--    <div><label> User Name : <input type="text" name="username"/> </label></div>-->
+<!--    <div><label> Password: <input type="password" name="password"/> </label></div>-->
+<!--    <div><input type="submit" value="Sign In"/></div>-->
+<!--</form>-->
+<div class="container-fluid">
+    <div class="row no-gutter">
+        <!-- The image half -->
+        <div class="col-md-6 d-none d-md-flex bg-image"></div>
+
+
+        <!-- The content half -->
+        <div class="col-md-6 bg-light">
+            <div class="login d-flex align-items-center py-5">
+
+                <!-- Demo content-->
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-10 col-xl-7 mx-auto">
+                            <h4 class="display-4">Login to Your Store.</h4>
+                            <form method="post" th:action="@{/login}">
+                                <div class="form-group mb-3">
+                                    <input autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4"
+                                           id="inputEmail" input name="username" placeholder="Email address" required=""
+                                           type="text">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <input class="form-control rounded-pill border-0 shadow-sm px-4 text-primary"
+                                           id="inputPassword" name="password" placeholder="Password" required=""
+                                           type="password">
+                                </div>
+                                <button class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm"
+                                        type="submit">Sign in
+                                </button>
+                            </form>
+                            <div th:if="${param.error}">
+                                Invalid username and password.
+                            </div>
+                            <div th:if="${param.logout}">
+                                You have been logged out.
+                            </div>
+
+                        </div>
+                    </div>
+                </div><!-- End -->
+
+            </div>
+        </div><!-- End -->
+
+    </div>
+</div>
+</body>
+</html>
