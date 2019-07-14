@@ -10,3 +10,10 @@ mvn spring-boot:run
 ```
 
 Open your browser to __http://localhost:8080__ to access the store.
+
+Two users for authentication:
+```
+username/password:
+1. scott/tiger
+2. john/snow
+```
