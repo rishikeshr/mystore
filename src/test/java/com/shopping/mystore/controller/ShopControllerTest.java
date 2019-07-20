@@ -38,8 +38,21 @@ public class ShopControllerTest {
         this.mvc.perform(get("/")).andExpect(status().isOk());
     }
 
+    @WithMockUser("scott")
+    @Test
+    public void login() throws Exception {
+        this.mvc.perform(get("/login")).andExpect(status().isOk());
+    }
+
+    @WithMockUser("scott")
+    @Test
+    public void index() throws Exception {
+        this.mvc.perform(get("/index")).andExpect(status().isOk());
+    }
+
     @Test
     public void testFailure() throws Exception {
-        this.mvc.perform(get("/failure")).andExpect(status().isOk());
+        this.mvc.perform(get("/failure")).andExpect(status().isNotFound());
     }
+
 }

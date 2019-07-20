@@ -1,7 +1,10 @@
 package com.shopping.mystore.controller;
 
+import com.shopping.mystore.domain.Customer;
+import com.shopping.mystore.domain.OrderItem;
 import com.shopping.mystore.model.Cart;
 import com.shopping.mystore.service.CartService;
+import com.shopping.mystore.service.CustomerService;
 import com.shopping.mystore.service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +16,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @SessionAttributes("cart")
@@ -27,6 +32,10 @@ public class ShopController {
     @Autowired
     CartService cartService;
 
+    @Autowired
+    CustomerService customerService;
+
+
     @GetMapping("/")
     public String home() {
         return "/index";
@@ -38,7 +47,7 @@ public class ShopController {
         return "greeting";
     }
 
-    @RequestMapping("/")
+    @RequestMapping("/home")
     public String root(Model model, @ModelAttribute("cart") Cart cart) {
         model.addAttribute("cart", cart);
         return "index";
@@ -53,8 +62,22 @@ public class ShopController {
     @PostMapping(value = "/checkout")
     public String checkout(Model model, @ModelAttribute("cart") Cart cart, RedirectAttributes attributes, Authentication authentication) {
         attributes.addFlashAttribute("cart", cart);
-        cartService.processCart(cart, authentication.getName());
+        List<OrderItem> orderItems = cartService.processCart(cart, authentication.getName());
+        int cartTotalPrice = orderItems.stream().mapToInt(orderItem -> orderItem.getTotalPrice().intValue()).sum();
+        Customer customer = customerService.findByName(authentication.getName());
+        model.addAttribute("orderItems", orderItems);
+        model.addAttribute("totalItemCount", cart.getProductList().size());
+        model.addAttribute("cartTotalPrice", cartTotalPrice);
+        model.addAttribute("customer", customer);
+        model.addAttribute("customerorderid", orderItems.get(0).getOrder().getId());
         return "checkout";
+    }
+
+    @RequestMapping("/backHome")
+    public void backHome(Model model, @SessionAttribute @ModelAttribute("cart") Cart cart, RedirectAttributes attributes, Authentication authentication, HttpServletResponse httpResponse) throws Exception {
+        cartService.postPaymentProcessing(authentication.getName());
+        attributes.addFlashAttribute("cart", new Cart());
+        httpResponse.sendRedirect("/index");
     }
 
     @RequestMapping(value = "/login")
@@ -74,11 +97,11 @@ public class ShopController {
 
     @GetMapping(value = "/getCartCount", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public int getCartCount(HttpServletRequest request, Model model, @ModelAttribute("cart") Cart cart) {
-        log.info(" Cart :: " + cart.getProductList());
+    public int getCartCount(HttpServletRequest request, Model model) {
         Principal principal = request.getUserPrincipal();
         log.info(" Checking for existing order of :: " + principal.getName());
-        cart = cartService.getPendingOrders(principal.getName());
+        Cart cart = cartService.getPendingOrders(principal.getName());
+        log.info(" Existing Cart For " + principal.getName() + " :: " + cart.getProductList());
         return cart.getProductList().size();
     }
 

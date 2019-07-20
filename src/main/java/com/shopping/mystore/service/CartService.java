@@ -38,19 +38,18 @@ public class CartService {
     @Autowired
     private OrderItemRepository orderItemRepository;
 
-    public void processCart(Cart cart, String name) {
+    public List<OrderItem> processCart(Cart cart, String name) {
         log.info(" Processing Cart for :: " + name);
         Customer customer = customerService.findByName(name);
         CustomerOrder pendingOrder = customerOrderRepository.getPendingCustomerOrder(customer.getId());
 
         if (pendingOrder != null) {
             log.info(" Processing Pending Order For : " + name);
-            processPendingOrder(cart, name);
+            return processPendingOrder(cart, name);
         } else {
             log.info(" Processing New Order For : " + name);
-            processNewOrder(cart, name);
+            return processNewOrder(cart, name);
         }
-
 
     }
 
@@ -79,7 +78,16 @@ public class CartService {
         return pendingCart;
     }
 
-    private void processPendingOrder(Cart cart, String name) {
+    public void postPaymentProcessing(String name) {
+        log.info(" Fetching Pending Customer Orders ");
+        Customer customer = customerService.findByName(name);
+        CustomerOrder pendingOrder = customerOrderRepository.getPendingCustomerOrder(customer.getId());
+        pendingOrder.setStatus(OrderStatus.COMPLETED);
+
+        customerOrderService.save(pendingOrder);
+    }
+
+    private List<OrderItem> processPendingOrder(Cart cart, String name) {
         log.info("Processing Pending Order for --> " + name);
         log.info("Processing For Updated Cart --> " + cart.getProductList());
         Customer customer = customerService.findByName(name);
@@ -120,9 +128,11 @@ public class CartService {
 
         log.info(" Saving Updated Order Item List " + existingOrderItemList);
         orderItemService.saveList(existingOrderItemList);
+
+        return existingOrderItemList;
     }
 
-    private void processNewOrder(Cart cart, String name) {
+    private List<OrderItem> processNewOrder(Cart cart, String name) {
         log.info("Processing New Order for --> " + name);
 
         Customer customer = customerService.findByName(name);
@@ -158,5 +168,7 @@ public class CartService {
         Set<CustomerOrder> customerOrderSet = new HashSet<CustomerOrder>();
         customerOrderSet.add(customerOrder);
         customer.setOrders(customerOrderSet);
+
+        return orderItemList;
     }
 }
