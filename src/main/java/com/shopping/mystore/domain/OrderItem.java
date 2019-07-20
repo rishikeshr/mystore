@@ -1,7 +1,6 @@
 package com.shopping.mystore.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.shopping.mystore.domain.enumeration.OrderItemStatus;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -11,8 +10,6 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Set;
 
 
 @Entity
@@ -36,23 +33,12 @@ public class OrderItem implements Serializable {
     @Column(name = "total_price", precision = 21, scale = 2, nullable = false)
     private BigDecimal totalPrice;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
-    private OrderItemStatus status;
-
-    @OneToMany(mappedBy = "orderItem")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Product> orders = new HashSet<>();
-
-    @ManyToOne
-    @JsonIgnoreProperties("orderItems")
+    @OneToOne
     private Product product;
 
     @ManyToOne
     @JsonIgnoreProperties("orderItems")
     private CustomerOrder order;
-
 
     public Long getId() {
         return id;
@@ -66,21 +52,17 @@ public class OrderItem implements Serializable {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
     public OrderItem quantity(Integer quantity) {
         this.quantity = quantity;
         return this;
     }
 
-    public BigDecimal getTotalPrice() {
-        return totalPrice;
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
-    public void setTotalPrice(BigDecimal totalPrice) {
-        this.totalPrice = totalPrice;
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
     }
 
     public OrderItem totalPrice(BigDecimal totalPrice) {
@@ -88,50 +70,12 @@ public class OrderItem implements Serializable {
         return this;
     }
 
-    public OrderItemStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(OrderItemStatus status) {
-        this.status = status;
-    }
-
-    public OrderItem status(OrderItemStatus status) {
-        this.status = status;
-        return this;
-    }
-
-    public Set<Product> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(Set<Product> products) {
-        this.orders = products;
-    }
-
-    public OrderItem orders(Set<Product> products) {
-        this.orders = products;
-        return this;
-    }
-
-    public OrderItem addOrder(Product product) {
-        this.orders.add(product);
-        product.setOrderItem(this);
-        return this;
-    }
-
-    public OrderItem removeOrder(Product product) {
-        this.orders.remove(product);
-        product.setOrderItem(null);
-        return this;
+    public void setTotalPrice(BigDecimal totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public Product getProduct() {
         return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
     }
 
     public OrderItem product(Product product) {
@@ -139,17 +83,21 @@ public class OrderItem implements Serializable {
         return this;
     }
 
-    public CustomerOrder getOrder() {
-        return order;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
-    public void setOrder(CustomerOrder customerOrder) {
-        this.order = customerOrder;
+    public CustomerOrder getOrder() {
+        return order;
     }
 
     public OrderItem order(CustomerOrder customerOrder) {
         this.order = customerOrder;
         return this;
+    }
+
+    public void setOrder(CustomerOrder customerOrder) {
+        this.order = customerOrder;
     }
 
     @Override
@@ -174,7 +122,6 @@ public class OrderItem implements Serializable {
                 "id=" + getId() +
                 ", quantity=" + getQuantity() +
                 ", totalPrice=" + getTotalPrice() +
-                ", status='" + getStatus() + "'" +
                 "}";
     }
 }

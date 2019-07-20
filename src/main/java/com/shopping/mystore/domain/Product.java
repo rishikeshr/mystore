@@ -1,6 +1,5 @@
 package com.shopping.mystore.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -27,6 +26,12 @@ public class Product implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @NotNull
+    @Column(name = "productcode", nullable = false)
+    private String productcode;
+
+
+
     @Column(name = "description")
     private String description;
 
@@ -40,9 +45,6 @@ public class Product implements Serializable {
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
-    @ManyToOne
-    @JsonIgnoreProperties("orders")
-    private OrderItem orderItem;
 
     public Long getId() {
         return id;
@@ -63,6 +65,14 @@ public class Product implements Serializable {
     public Product name(String name) {
         this.name = name;
         return this;
+    }
+
+    public String getProductcode() {
+        return productcode;
+    }
+
+    public void setProductcode(String productcode) {
+        this.productcode = productcode;
     }
 
     public String getDescription() {
@@ -101,19 +111,6 @@ public class Product implements Serializable {
 
     public Product quantity(Integer quantity) {
         this.quantity = quantity;
-        return this;
-    }
-
-    public OrderItem getOrderItem() {
-        return orderItem;
-    }
-
-    public void setOrderItem(OrderItem orderItem) {
-        this.orderItem = orderItem;
-    }
-
-    public Product orderItem(OrderItem orderItem) {
-        this.orderItem = orderItem;
         return this;
     }
 

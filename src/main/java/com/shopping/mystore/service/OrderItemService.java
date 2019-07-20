@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -35,6 +36,17 @@ public class OrderItemService {
     public OrderItem save(OrderItem orderItem) {
         log.debug("Request to save OrderItem : {}", orderItem);
         return orderItemRepository.save(orderItem);
+    }
+
+    /**
+     * Save a orderItem.
+     *
+     * @param orderItem the entity to save.
+     * @return the persisted entity.
+     */
+    public List<OrderItem> saveList(List<OrderItem> orderItemList) {
+        log.debug("Request to save OrderItem List: {}", orderItemList);
+        return orderItemRepository.saveAll(orderItemList);
     }
 
     /**

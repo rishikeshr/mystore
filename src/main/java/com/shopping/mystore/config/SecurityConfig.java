@@ -13,12 +13,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/css/**").permitAll()
-                .antMatchers("h2/**").permitAll()
+                .antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/user/**").hasRole("USER")
                 .antMatchers("/").hasRole("USER")
                 .antMatchers("/checkout").hasRole("USER")
+                .antMatchers("/addToCart").hasRole("USER")
+                .antMatchers("/getCartCount").hasRole("USER")
+                .and()
+                .headers().frameOptions().sameOrigin()
                 .and()
                 .formLogin()
                 .loginPage("/login").failureUrl("/login-error")

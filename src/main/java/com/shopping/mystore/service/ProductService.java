@@ -71,4 +71,8 @@ public class ProductService {
         log.debug("Request to delete Product : {}", id);
         productRepository.deleteById(id);
     }
+
+    public Product getProductByCode(String productCode) {
+        return productRepository.findProductByProductcode(productCode);
+    }
 }

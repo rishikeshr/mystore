@@ -12,6 +12,7 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
+
 @Entity
 @Table(name = "customer_order")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -31,10 +32,6 @@ public class CustomerOrder implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private OrderStatus status;
-
-    @NotNull
-    @Column(name = "code", nullable = false)
-    private String code;
 
     @OneToMany(mappedBy = "order")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -60,21 +57,17 @@ public class CustomerOrder implements Serializable {
         return placedDate;
     }
 
-    public void setPlacedDate(Instant placedDate) {
-        this.placedDate = placedDate;
-    }
-
     public CustomerOrder placedDate(Instant placedDate) {
         this.placedDate = placedDate;
         return this;
     }
 
-    public OrderStatus getStatus() {
-        return status;
+    public void setPlacedDate(Instant placedDate) {
+        this.placedDate = placedDate;
     }
 
-    public void setStatus(OrderStatus status) {
-        this.status = status;
+    public OrderStatus getStatus() {
+        return status;
     }
 
     public CustomerOrder status(OrderStatus status) {
@@ -82,25 +75,12 @@ public class CustomerOrder implements Serializable {
         return this;
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public CustomerOrder code(String code) {
-        this.code = code;
-        return this;
+    public void setStatus(OrderStatus status) {
+        this.status = status;
     }
 
     public Set<OrderItem> getOrderItems() {
         return orderItems;
-    }
-
-    public void setOrderItems(Set<OrderItem> orderItems) {
-        this.orderItems = orderItems;
     }
 
     public CustomerOrder orderItems(Set<OrderItem> orderItems) {
@@ -120,12 +100,12 @@ public class CustomerOrder implements Serializable {
         return this;
     }
 
-    public Set<Invoice> getInvoices() {
-        return invoices;
+    public void setOrderItems(Set<OrderItem> orderItems) {
+        this.orderItems = orderItems;
     }
 
-    public void setInvoices(Set<Invoice> invoices) {
-        this.invoices = invoices;
+    public Set<Invoice> getInvoices() {
+        return invoices;
     }
 
     public CustomerOrder invoices(Set<Invoice> invoices) {
@@ -145,17 +125,21 @@ public class CustomerOrder implements Serializable {
         return this;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public void setInvoices(Set<Invoice> invoices) {
+        this.invoices = invoices;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public Customer getCustomer() {
+        return customer;
     }
 
     public CustomerOrder customer(Customer customer) {
         this.customer = customer;
         return this;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     @Override
@@ -180,7 +164,6 @@ public class CustomerOrder implements Serializable {
                 "id=" + getId() +
                 ", placedDate='" + getPlacedDate() + "'" +
                 ", status='" + getStatus() + "'" +
-                ", code='" + getCode() + "'" +
                 "}";
     }
 }

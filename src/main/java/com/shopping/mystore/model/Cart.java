@@ -1,9 +1,21 @@
 package com.shopping.mystore.model;
 
-import org.springframework.stereotype.Component;
+import java.util.ArrayList;
+import java.util.List;
 
-@Component
 public class Cart {
 
+    private List<String> productList;
 
+    public Cart() {
+        productList = new ArrayList<String>();
+    }
+
+    public List<String> getProductList() {
+        return productList;
+    }
+
+    public void setProductList(List<String> productList) {
+        this.productList = productList;
+    }
 }

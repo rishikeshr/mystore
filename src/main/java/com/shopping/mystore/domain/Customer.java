@@ -69,21 +69,17 @@ public class Customer implements Serializable {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
     public Customer firstName(String firstName) {
         this.firstName = firstName;
         return this;
     }
 
-    public String getLastName() {
-        return lastName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public String getLastName() {
+        return lastName;
     }
 
     public Customer lastName(String lastName) {
@@ -91,12 +87,12 @@ public class Customer implements Serializable {
         return this;
     }
 
-    public String getEmail() {
-        return email;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public String getEmail() {
+        return email;
     }
 
     public Customer email(String email) {
@@ -104,12 +100,12 @@ public class Customer implements Serializable {
         return this;
     }
 
-    public String getPhone() {
-        return phone;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public String getPhone() {
+        return phone;
     }
 
     public Customer phone(String phone) {
@@ -117,12 +113,12 @@ public class Customer implements Serializable {
         return this;
     }
 
-    public String getAddressLine1() {
-        return addressLine1;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public void setAddressLine1(String addressLine1) {
-        this.addressLine1 = addressLine1;
+    public String getAddressLine1() {
+        return addressLine1;
     }
 
     public Customer addressLine1(String addressLine1) {
@@ -130,12 +126,12 @@ public class Customer implements Serializable {
         return this;
     }
 
-    public String getAddressLine2() {
-        return addressLine2;
+    public void setAddressLine1(String addressLine1) {
+        this.addressLine1 = addressLine1;
     }
 
-    public void setAddressLine2(String addressLine2) {
-        this.addressLine2 = addressLine2;
+    public String getAddressLine2() {
+        return addressLine2;
     }
 
     public Customer addressLine2(String addressLine2) {
@@ -143,12 +139,12 @@ public class Customer implements Serializable {
         return this;
     }
 
-    public String getCity() {
-        return city;
+    public void setAddressLine2(String addressLine2) {
+        this.addressLine2 = addressLine2;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public String getCity() {
+        return city;
     }
 
     public Customer city(String city) {
@@ -156,12 +152,12 @@ public class Customer implements Serializable {
         return this;
     }
 
-    public String getCountry() {
-        return country;
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public String getCountry() {
+        return country;
     }
 
     public Customer country(String country) {
@@ -169,12 +165,12 @@ public class Customer implements Serializable {
         return this;
     }
 
-    public Set<CustomerOrder> getOrders() {
-        return orders;
+    public void setCountry(String country) {
+        this.country = country;
     }
 
-    public void setOrders(Set<CustomerOrder> customerOrders) {
-        this.orders = customerOrders;
+    public Set<CustomerOrder> getOrders() {
+        return orders;
     }
 
     public Customer orders(Set<CustomerOrder> customerOrders) {
@@ -194,6 +190,11 @@ public class Customer implements Serializable {
         return this;
     }
 
+    public void setOrders(Set<CustomerOrder> customerOrders) {
+        this.orders = customerOrders;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -205,6 +206,10 @@ public class Customer implements Serializable {
         return id != null && id.equals(((Customer) o).id);
     }
 
+    @Override
+    public int hashCode() {
+        return 31;
+    }
 
     @Override
     public String toString() {

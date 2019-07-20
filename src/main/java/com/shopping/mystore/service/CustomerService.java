@@ -71,4 +71,15 @@ public class CustomerService {
         log.debug("Request to delete Customer : {}", id);
         customerRepository.deleteById(id);
     }
+
+    /**
+     * Get one customer by first name.
+     *
+     * @param name the name of the entity.
+     * @return the entity.
+     */
+    public Customer findByName(String name) {
+        log.debug(" Find Customer By First Name ");
+        return customerRepository.findCustomerByFirstName(name);
+    }
 }
