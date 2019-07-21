@@ -13,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -74,9 +75,9 @@ public class ShopController {
     }
 
     @RequestMapping("/backHome")
-    public void backHome(Model model, @SessionAttribute @ModelAttribute("cart") Cart cart, RedirectAttributes attributes, Authentication authentication, HttpServletResponse httpResponse) throws Exception {
+    public void backHome(Model model, @SessionAttribute @ModelAttribute("cart") Cart cart, RedirectAttributes attributes, Authentication authentication, HttpServletResponse httpResponse, SessionStatus sessionStatus) throws Exception {
         cartService.postPaymentProcessing(authentication.getName());
-        attributes.addFlashAttribute("cart", new Cart());
+        sessionStatus.setComplete();
         httpResponse.sendRedirect("/index");
     }
 
