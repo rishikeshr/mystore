@@ -17,3 +17,5 @@ username/password:
 1. scott/tiger
 2. john/snow
 ```
+
+[![Build Status](https://travis-ci.org/rishikeshr/mystore.svg?branch=master)](https://travis-ci.org/rishikeshr/mystore)
